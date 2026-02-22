@@ -109,6 +109,7 @@ const Cards = {
         document.getElementById('card-val').innerText = '?';
         document.getElementById('card-suit').innerText = '🃏';
         document.getElementById('card-card').className = 'card-display';
+        // Toast.show("เริ่มใหม่สำเร็จ!");
         this.updateHistoryUI();
     },
 
@@ -175,6 +176,7 @@ const Croc = {
             document.body.classList.add('flash-red');
             document.getElementById('reset-croc-btn').classList.remove('hidden');
             document.querySelectorAll('.tooth').forEach(t => t.classList.add('pressed'));
+            Toast.show("มึงโดน!", "red");
         } else {
             el.classList.add('pressed');
         }
@@ -198,6 +200,7 @@ const DeepTalk = {
             this.pools[cat] = [...ques[cat]];
         });
         document.getElementById('question-text').innerText = 'รีเซ็ตคำถามเรียบร้อย! เลือกหมวดหมู่แล้วกด "ถัดไป"';
+        Toast.show("รีเซ็ตคำถามทั้งหมดแล้ว", "pink");
     },
 
     initChips() {
