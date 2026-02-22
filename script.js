@@ -2,6 +2,22 @@
 const suits = ['♥', '♦', '♣', '♠'];
 const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
+// --- Toast Utility ---
+const Toast = {
+    show(message, type = 'blue') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerText = message;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+};
+
 const ques = {
     love: [
         "รักครั้งไหนที่สอนบทเรียนให้แกมากที่สุด?", "เชื่อเรื่อง \"คนที่ใช่ในเวลาที่ผิด\" ไหม?", "อะไรคือข้อเสียของตัวเองในเรื่องความรักที่แก้ไม่หายสักที?", "สเปคที่ชอบตอนเด็ก กับตอนนี้ ต่างกันยังไง?", "เคยฝืนทนคบกับใครทั้งๆ ที่รู้ว่ามันไปต่อไม่ได้ไหม? เพราะอะไร?", "อะไรคือ Red Flag ที่แกจะไม่มีวันทนเด็ดขาดในตัวแฟน?", "นิยามคำว่า \"ความรักที่สมบูรณ์แบบ\" ของแกคืออะไร?", "แกมูฟออนจากรักครั้งที่เจ็บที่สุดได้ยังไง?", "เคยแอบชอบเพื่อนสนิทไหม? แล้วจัดการความรู้สึกนั้นยังไง?", "คิดว่าการแต่งงานยังจำเป็นอยู่ไหมในยุคนี้?", "ถ้าย้อนเวลากลับไปบอกแฟนเก่าได้ 1 ประโยค จะบอกว่าอะไร?", "ตอนนี้พร้อมจะมีความรักครั้งใหม่จริงๆ หรือแค่อยากมีคนคุยแก้เหงา?", "เรื่องอะไรที่แฟนทำแล้ว แกจะรู้สึกโดนทำร้ายจิตใจที่สุด?", "คิดว่าคนเราสามารถรักคนสองคนในเวลาเดียวกันได้ไหม?", "การนอกใจ ร้ายแรงแค่ไหนสำหรับแก ให้อภัยได้ไหม?", "แกกลัวการผูกมัด (Commitment) ไหม?", "ความทรงจำเรื่องความรักที่ทำให้แกยิ้มได้เสมอคืออะไร?", "วิธีง้อแฟนในแบบของแกคืออะไร?", "เลิกกันแล้ว กลับมาเป็นเพื่อนกันได้จริงๆ ไหม?", "เชื่อในรักแรกพบไหม หรือแกเป็นสายต้องคุยก่อนถึงจะชอบ?", "สิ่งที่โรแมนติกที่สุดที่เคยมีคนทำให้แกคืออะไร?", "สิ่งที่โรแมนติกที่สุดที่แกเคยทำให้คนอื่นคืออะไร?", "แกให้ความสำคัญกับเซ็กส์ในความสัมพันธ์กี่เปอร์เซ็นต์?", "คิดว่าระยะทาง (Long Distance) เป็นอุปสรรคกับความรักไหม?", "แกเปลี่ยนตัวเองเพื่อแฟนได้มากที่สุดแค่ไหน?", "ถ้าครอบครัวไม่ชอบแฟนแก แกจะเลือกใคร?", "รู้สึกยังไงกับประโยคที่ว่า \"รักแท้แพ้ใกล้ชิด\"?", "ระหว่างคนที่เรารัก กับคนที่รักเรา แกจะเลือกใคร?", "เคยรู้สึกแย่กับตัวเองเพราะความรักพังไหม?", "แกเป็นคนขี้หึงระดับไหน จาก 1-10?", "การกระทำอะไรของแฟนที่ทำให้แกรู้สึกปลอดภัยที่สุด?", "ถ้าวันพรุ่งนี้โลกแตก คืนนี้แกอยากอยู่กับใคร?", "เรื่องบนเตียงสำคัญกว่า หรือความเข้าใจสำคัญกว่า?", "แกมีความลับเรื่องความรักที่คนในนี้ยังไม่รู้ไหม? (ถ้ามี... ดื่ม!)", "คิดว่าความรักจืดจางลงตามกาลเวลาเป็นเรื่องปกติไหม?", "เคยโดนเทแบบงงๆ ไหม เล่าให้ฟังหน่อย", "มีเพลงไหนไหมที่ฟังแล้วนึกถึงแฟนเก่าเสมอ?", "แกให้โอกาสคนที่นอกใจได้กี่ครั้ง?", "ถ้าแฟนบอกเลิกโดยไม่บอกเหตุผล แกจะทำยังไง?", "แกชอบเป็นฝ่ายรุก หรือฝ่ายรับในความสัมพันธ์?", "อะไรคือสิ่งที่ทำให้แกตกหลุมรักคนคนนึงได้ง่ายๆ?", "คิดว่าตัวเองเป็นแฟนที่ดีพอหรือยัง?", "รักษาความสัมพันธ์ยังไงให้คบกันได้นานๆ?", "เคยเปรียบเทียบแฟนปัจจุบันกับแฟนเก่าไหม?", "ความผิดหวังในความรักครั้งไหนที่เปลี่ยนนิสัยแกไปเลย?", "คิดว่าแอปหาคู่ (Tinder, Bumble) หาความรักจริงจังได้ไหม?", "ระหว่างความรักที่หวือหวาแต่น่าตื่นเต้น กับความรักที่เรียบง่ายแตมั่นคง เลือกแบบไหน?", "แกบอกรักครั้งสุดท้ายเมื่อไหร่?", "ถ้าคนที่แกชอบ เขามีคนที่ชอบอยู่แล้ว แกจะสู้หรือถอย?", "ทุกวันนี้ แกยังรอใครอยู่ไหม?"
@@ -47,7 +63,7 @@ const App = {
 const Cards = {
     deck: [],
     history: [],
-    
+
     init() {
         this.reset();
         document.getElementById('draw-btn').addEventListener('click', () => this.draw());
@@ -59,10 +75,10 @@ const Cards = {
         this.deck = [];
         suits.forEach(suit => {
             values.forEach(value => {
-                this.deck.push({ 
-                    value, 
-                    suit, 
-                    color: (suit === '♥' || suit === '♦') ? 'card-red' : 'card-black' 
+                this.deck.push({
+                    value,
+                    suit,
+                    color: (suit === '♥' || suit === '♦') ? 'card-red' : 'card-black'
                 });
             });
         });
@@ -73,12 +89,12 @@ const Cards = {
             const j = Math.floor(Math.random() * (i + 1));
             [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
         }
-        if (this.deck.length > 0) alert("สลับสำรับเรียบร้อย!");
+        if (this.deck.length > 0) Toast.show("สลับสำรับเรียบร้อย!");
     },
 
     draw() {
         if (this.deck.length === 0) {
-            alert("ไพ่หมดสำรับแล้ว! กรุณารีเซ็ต");
+            Toast.show("ไพ่หมดสำรับแล้ว! กรุณารีเซ็ต");
             return;
         }
         const card = this.deck.pop();
@@ -109,7 +125,7 @@ const Cards = {
         this.history.forEach((card, index) => {
             const item = document.createElement('div');
             item.className = 'history-item';
-            
+
             const label = document.createElement('span');
             label.className = card.color;
             label.style.fontWeight = '700';
@@ -130,7 +146,7 @@ const Cards = {
 const Croc = {
     trapTooth: -1,
     teethCount: 12,
-    
+
     init() {
         document.getElementById('reset-croc-btn').addEventListener('click', () => this.reset());
         this.reset();
@@ -139,12 +155,9 @@ const Croc = {
     reset() {
         this.trapTooth = Math.floor(Math.random() * this.teethCount);
         const container = document.getElementById('teeth-container');
-        const status = document.getElementById('croc-status');
         const resetBtn = document.getElementById('reset-croc-btn');
 
         container.innerHTML = '';
-        status.innerText = "กดเลย"; // User requested Thai
-        status.style.color = "var(--neon-green)";
         document.body.classList.remove('flash-red');
         resetBtn.classList.add('hidden');
 
@@ -159,9 +172,6 @@ const Croc = {
     handlePress(index, el) {
         if (index === this.trapTooth) {
             el.classList.add('trap');
-            const status = document.getElementById('croc-status');
-            status.innerText = "มึงโดน!"; // User requested Thai
-            status.style.color = "var(--neon-red)";
             document.body.classList.add('flash-red');
             document.getElementById('reset-croc-btn').classList.remove('hidden');
             document.querySelectorAll('.tooth').forEach(t => t.classList.add('pressed'));
@@ -175,7 +185,7 @@ const Croc = {
 const DeepTalk = {
     currentCat: 'love',
     pools: {},
-    
+
     init() {
         this.resetPools();
         this.initChips();
