@@ -1,0 +1,622 @@
+:root {
+    --bg-color: #080808;
+    --panel-bg: rgba(26, 26, 26, 0.6);
+    --text-primary: #ffffff;
+    --neon-blue: #00f2ff;
+    --neon-pink: #ff00c8;
+    --neon-green: #39ff14;
+    --neon-red: #ff3131;
+    --glow-blue: 0 0 15px rgba(0, 242, 255, 0.5);
+    --glow-pink: 0 0 15px rgba(255, 0, 200, 0.5);
+    --glow-green: 0 0 15px rgba(57, 255, 20, 0.5);
+    --glow-red: 0 0 15px rgba(255, 49, 49, 0.5);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(0, 242, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 200, 0.05) 0%, transparent 40%);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overscroll-behavior: none;
+    /* Prevent bounce/pull-to-refresh */
+}
+
+/* --- Layout --- */
+nav {
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0.8rem 1.2rem;
+    /* Reduced vertical padding for mobile */
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    /* Tighter gap for mobile */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: var(--glass-border);
+}
+
+main {
+    flex: 1;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.game-section {
+    display: none;
+    width: 100%;
+    animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.game-section.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Navigation Buttons --- */
+.nav-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.nav-btn.active[data-game="cards"] {
+    border-color: var(--neon-blue);
+    box-shadow: var(--glow-blue);
+    color: var(--neon-blue);
+    background: rgba(0, 242, 255, 0.05);
+}
+
+.nav-btn.active[data-game="crocodile"] {
+    border-color: var(--neon-green);
+    box-shadow: var(--glow-green);
+    color: var(--neon-green);
+    background: rgba(57, 255, 20, 0.05);
+}
+
+.nav-btn.active[data-game="deep-talk"] {
+    border-color: var(--neon-pink);
+    box-shadow: var(--glow-pink);
+    color: var(--neon-pink);
+    background: rgba(255, 0, 200, 0.05);
+}
+
+/* --- Standard Components --- */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: var(--glass-border);
+    border-radius: 24px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    padding: 20px 30px;
+    /* Taller buttons for easier thumb tapping */
+    border-radius: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    max-width: 340px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    touch-action: manipulation;
+    /* Faster touch response */
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+.btn-blue {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+}
+
+.btn-blue:hover {
+    box-shadow: var(--glow-blue);
+    background: rgba(0, 242, 255, 0.1);
+}
+
+.btn-green {
+    border-color: var(--neon-green);
+    color: var(--neon-green);
+}
+
+.btn-green:hover {
+    box-shadow: var(--glow-green);
+    background: rgba(57, 255, 20, 0.1);
+}
+
+.btn-pink {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+}
+
+.btn-pink:hover {
+    box-shadow: var(--glow-pink);
+    background: rgba(255, 0, 200, 0.1);
+}
+
+.btn-red {
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+}
+
+.btn-red:hover {
+    box-shadow: var(--glow-red);
+    background: rgba(255, 49, 49, 0.1);
+}
+
+/* --- Card Game --- */
+.card-display {
+    width: 200px;
+    /* Slightly smaller to fit better on compact screens */
+    height: 280px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-value {
+    font-size: 4.5rem;
+    font-weight: 700;
+}
+
+.card-suit-large {
+    font-size: 3.5rem;
+}
+
+.card-red {
+    color: #d63031;
+}
+
+.card-black {
+    color: #2d3436;
+}
+
+.history-container {
+    padding: 1.5rem;
+    max-height: 250px;
+}
+
+.history-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 1rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 180px;
+    padding-right: 5px;
+}
+
+.history-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.history-item {
+    font-size: 1.1rem;
+    padding: 14px 20px;
+    background: #ffffff;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #222;
+    transition: transform 0.2s;
+}
+
+.history-item:hover {
+    transform: translateX(5px);
+}
+
+.history-index {
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    background: #222;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* --- Crocodile Dentist --- */
+.croc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.croc-status-bar {
+    font-size: 2.2rem;
+    /* Larger for mobile visibility */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--neon-green);
+    text-align: center;
+}
+
+.croc-mouth {
+    background: #1a4d1a;
+    background-image:
+        radial-gradient(circle at 50% 120%, rgba(0, 0, 0, 0.4), transparent),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 2px, transparent 2px, transparent 8px);
+    border: 8px solid #2d6b2d;
+    border-bottom: 30px solid #1a3a1a;
+    padding: 50px 20px 30px;
+    border-radius: 60% 60% 30% 30% / 120% 120% 20% 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow:
+        inset 0 0 60px rgba(0, 0, 0, 0.7),
+        0 25px 50px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 440px;
+}
+
+.croc-eyes {
+    position: absolute;
+    top: -45px;
+    display: flex;
+    gap: 60px;
+}
+
+.croc-eye {
+    width: 55px;
+    height: 55px;
+    background: white;
+    border: 5px solid #1a3a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.croc-eye::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: black;
+    border-radius: 50%;
+    animation: lookAround 5s infinite;
+}
+
+.croc-nostrils {
+    position: absolute;
+    top: 15px;
+    display: flex;
+    gap: 40px;
+}
+
+.nostril {
+    width: 12px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+}
+
+.croc-bump {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #2d6b2d;
+    border-radius: 50%;
+    top: 20%;
+}
+
+.bump-l {
+    left: 15%;
+}
+
+.bump-r {
+    right: 15%;
+}
+
+.teeth-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    /* Reduced gap to fit teeth better on small screens */
+    width: 100%;
+    padding: 10px;
+}
+
+.tooth {
+    aspect-ratio: 0.85;
+    background: #fdfdfd;
+    border: none;
+    border-radius: 4px 4px 12px 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 4px 0 #ccc, 0 6px 12px rgba(0, 0, 0, 0.2);
+    touch-action: manipulation;
+}
+
+.tooth:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+.tooth.pressed {
+    background: #333;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(6px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.tooth.trap {
+    background: var(--neon-red) !important;
+    box-shadow: 0 0 30px var(--neon-red), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translate(0, 6px);
+    }
+
+    25% {
+        transform: translate(-2px, 6px);
+    }
+
+    75% {
+        transform: translate(2px, 6px);
+    }
+}
+
+/* --- Deep Talk --- */
+.category-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+}
+
+.chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+}
+
+.chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.chip.active {
+    background: var(--neon-pink);
+    color: white;
+    border-color: var(--neon-pink);
+    box-shadow: var(--glow-pink);
+}
+
+.question-card {
+    padding: 3.5rem 2rem;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    border-radius: 20px;
+}
+
+.question-card::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 5rem;
+    color: rgba(255, 0, 200, 0.15);
+    font-style: italic;
+    font-family: serif;
+}
+
+#question-text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    font-weight: 600;
+    z-index: 1;
+    color: #eee;
+}
+
+#q-category-label {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--neon-pink);
+    opacity: 0.6;
+}
+
+/* --- Global Utilities --- */
+.flash-red {
+    animation: flashRed 0.8s infinite;
+}
+
+@keyframes flashRed {
+
+    0%,
+    100% {
+        background-color: var(--bg-color);
+    }
+
+    50% {
+        background-color: #3d0000;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    nav {
+        gap: 6px;
+        padding: 0.6rem 0.4rem;
+    }
+
+    .nav-btn {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+        border-radius: 8px;
+    }
+
+    .card-display {
+        width: 170px;
+        height: 240px;
+    }
+
+    .card-value {
+        font-size: 3.5rem;
+    }
+
+    .card-suit-large {
+        font-size: 2.8rem;
+    }
+
+    .teeth-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    /* 3 columns on small phones for massive teeth */
+    #question-text {
+        font-size: 1.25rem;
+    }
+
+    .croc-status-bar {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        padding: 18px 24px;
+        font-size: 1rem;
+        border-radius: 14px;
+    }
+}
+
+@keyframes lookAround {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-8px, 4px);
+    }
+
+    50% {
+        transform: translate(8px, -4px);
+    }
+
+    75% {
+        transform: translate(0, -8px);
+    }
+}

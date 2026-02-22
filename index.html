@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Party & Drinking Games - Premium Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <button class="nav-btn active" data-game="cards">Cards</button>
+        <button class="nav-btn" data-game="crocodile">Croc</button>
+        <button class="nav-btn" data-game="deep-talk">Deep Talk</button>
+    </nav>
+
+    <main>
+        <!-- Card Game -->
+        <section id="cards" class="game-section active">
+            <div id="card-card" class="card-display">
+                <div id="card-val" class="card-value">?</div>
+                <div id="card-suit" class="card-suit-large">🃏</div>
+            </div>
+
+            <div class="controls-column"
+                style="width: 100%; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                <button id="draw-btn" class="btn btn-blue">จั่วไพ่</button>
+                <div style="display: flex; gap: 12px; width: 100%; max-width: 320px;">
+                    <button id="shuffle-btn" class="btn btn-blue" style="flex: 1;">สลับไพ่</button>
+                    <button id="reset-cards-btn" class="btn btn-blue" style="flex: 1;">เริ่มใหม่</button>
+                </div>
+            </div>
+
+            <div class="glass-panel history-container">
+                <div class="history-title">ประวัติการจั่ว</div>
+                <div id="history-list" class="history-list"></div>
+            </div>
+        </section>
+
+        <!-- Crocodile Dentist -->
+        <section id="crocodile" class="game-section">
+            <div class="croc-container">
+                <div id="croc-status" class="croc-status-bar">กดเลย!</div>
+
+                <div class="croc-mouth">
+                    <div class="croc-eyes">
+                        <div class="croc-eye"></div>
+                        <div class="croc-eye"></div>
+                    </div>
+                    <div class="croc-nostrils">
+                        <div class="nostril"></div>
+                        <div class="nostril"></div>
+                    </div>
+                    <div class="croc-bump bump-l"></div>
+                    <div class="croc-bump bump-r"></div>
+                    <div class="teeth-grid" id="teeth-container"></div>
+                </div>
+
+                <button id="reset-croc-btn" class="btn btn-green hidden">เล่นใหม่อีกรอบ</button>
+            </div>
+        </section>
+
+        <!-- Deep Talk -->
+        <section id="deep-talk" class="game-section">
+            <div class="category-chips">
+                <div class="chip active" data-cat="love">❤️ ความรัก</div>
+                <div class="chip" data-cat="life">🌱 ชีวิต</div>
+                <div class="chip" data-cat="inner">🧠 ตัวตน</div>
+                <div class="chip" data-cat="friends">🤝 มิตรภาพ</div>
+            </div>
+
+            <div class="glass-panel question-card">
+                <div id="question-text">พร้อมจะขุดความลับหรือยัง? <br> เลือกหมวดหมู่แล้วกด "ถัดไป" ได้เลย!</div>
+                <div id="q-category-label">หมวดหมู่: ทั้งหมด</div>
+            </div>
+
+            <div class="controls-column"
+                style="width: 100%; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                <button id="next-q-btn" class="btn btn-pink">คำถามถัดไป</button>
+                <button id="reset-q-btn" class="btn btn-pink">เริ่มต้นใหม่</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
