@@ -9,26 +9,42 @@
 </head>
 
 <body>
+    <canvas id="particle-canvas"></canvas>
     <div id="toast-container" class="toast-container"></div>
 
     <nav>
         <button class="nav-btn active" data-game="cards">Cards</button>
         <button class="nav-btn" data-game="crocodile">Croc</button>
         <button class="nav-btn" data-game="deep-talk">Deep Talk</button>
+        <button id="lock-btn" class="nav-btn lock-btn" title="Unlock Secret Answers">🔒</button>
     </nav>
 
     <main>
         <!-- Card Game -->
         <section id="cards" class="game-section active">
-            <div id="card-card" class="card-display">
-                <div id="card-val" class="card-value">?</div>
-                <div id="card-suit" class="card-suit-large">🃏</div>
+            <div class="card-scene">
+                <div id="card-card" class="card-display">
+                    <div class="card-face card-front">
+                        <div class="card-corner top-left">
+                            <div id="card-val-tl" class="corner-val">?</div>
+                        </div>
+                        <div id="card-val" class="card-value">?</div>
+                        <div id="card-suit" class="card-suit-large">🃏</div>
+                        <div class="card-corner bottom-right">
+                            <div id="card-val-br" class="corner-val">?</div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back">
+                        <div class="card-back-pattern"></div>
+                    </div>
+                </div>
+                <div id="card-count-badge" class="card-count-badge">52 ใบ</div>
             </div>
 
             <div class="controls-column"
                 style="width: 100%; display: flex; flex-direction: column; gap: 12px; align-items: center;">
                 <button id="draw-btn" class="btn btn-blue">จั่วไพ่</button>
-                <div style="display: flex; gap: 12px; width: 100%; max-width: 320px;">
+                <div style="display: flex; gap: 12px; width: 100%; max-width: 340px;">
                     <button id="shuffle-btn" class="btn btn-blue" style="flex: 1;">สลับไพ่</button>
                     <button id="reset-cards-btn" class="btn btn-blue" style="flex: 1;">เริ่มใหม่</button>
                 </div>
@@ -43,7 +59,7 @@
         <!-- Crocodile Dentist -->
         <section id="crocodile" class="game-section">
             <div class="croc-container">
-                <div class="croc-mouth">
+                <div class="croc-mouth" id="croc-mouth">
                     <div class="croc-eyes">
                         <div class="croc-eye"></div>
                         <div class="croc-eye"></div>
@@ -82,6 +98,44 @@
             </div>
         </section>
     </main>
+
+    <!-- Custom PIN Modal -->
+    <div id="pin-modal" class="modal-overlay">
+        <div class="pin-container glass-panel">
+            <div class="pin-header">
+                <h3>Enter Access PIN</h3>
+                <p>Please enter the 8-digit security code</p>
+            </div>
+
+            <div id="pin-display" class="pin-display">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+
+            <div class="pin-keypad">
+                <button class="key">1</button>
+                <button class="key">2</button>
+                <button class="key">3</button>
+                <button class="key">4</button>
+                <button class="key">5</button>
+                <button class="key">6</button>
+                <button class="key">7</button>
+                <button class="key">8</button>
+                <button class="key">9</button>
+                <button class="key btn-clear">C</button>
+                <button class="key">0</button>
+                <button class="key btn-backspace">←</button>
+            </div>
+
+            <button id="close-pin-btn" class="close-modal-btn">Cancel</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
